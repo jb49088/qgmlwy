@@ -11,15 +11,15 @@ enum custom_keycodes {
   ST_MACRO_1,
 };
 
-#define DUAL_FUNC_0 LT(7, KC_C)
-#define DUAL_FUNC_1 LT(13, KC_V)
+
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
     KC_DELETE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           TG(3),          
     KC_TAB,         KC_Q,           KC_G,           KC_M,           KC_L,           KC_W,                                           KC_Y,           KC_F,           KC_U,           KC_B,           KC_QUOTE,       KC_BSLS,        
     KC_ESCAPE,      MT(MOD_LGUI, KC_D),MT(MOD_LALT, KC_S),MT(MOD_LCTL, KC_T),MT(MOD_LSFT, KC_N),KC_R,                                           KC_I,           MT(MOD_RSFT, KC_A),MT(MOD_RCTL, KC_E),MT(MOD_RALT, KC_O),MT(MOD_RGUI, KC_H),KC_SCLN,        
-    CW_TOGG,        KC_Z,           KC_X,           DUAL_FUNC_0,           DUAL_FUNC_1,           KC_J,                                           KC_K,           KC_P,           KC_COMMA,       KC_DOT,         KC_SLASH,       KC_CAPS,
+    CW_TOGG,        KC_Z,           KC_X,           KC_C,           KC_V,           KC_J,                                           KC_K,           KC_P,           KC_COMMA,       KC_DOT,         KC_SLASH,       KC_CAPS,
                                                     LT(1, KC_SPACE),LT(2, KC_ENTER),                                ST_MACRO_0,     KC_BSPC
   ),
   [1] = LAYOUT_voyager(
@@ -45,6 +45,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+
+
+
+
+
+
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case ST_MACRO_0:
@@ -57,26 +65,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       SEND_STRING(SS_RALT(SS_TAP(X_TAB)));
     }
     break;
-
-    case DUAL_FUNC_0:
-      if (!record->tap.count && record->event.pressed) {
-        register_code16(LCTL(KC_C));
-        return false;
-      } else if (!record->tap.count && !record->event.pressed) {
-        unregister_code16(LCTL(KC_C));
-        return false;
-      }
-      return true;
-
-    case DUAL_FUNC_1:
-      if (!record->tap.count && record->event.pressed) {
-        register_code16(LCTL(LSFT(KC_V)));
-        return false;
-      } else if (!record->tap.count && !record->event.pressed) {
-        unregister_code16(LCTL(LSFT(KC_V)));
-        return false;
-      }
-      return true;
 
     case RGB_SLD:
       if (record->event.pressed) {
